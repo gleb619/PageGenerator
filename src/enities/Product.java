@@ -1,4 +1,4 @@
-package org.test.model;
+package enities;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

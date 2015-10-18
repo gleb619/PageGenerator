@@ -19,6 +19,11 @@ class FileUtil {
 	def withEachAllFile(Closure closure) {
 		new File(filename).eachFileRecurse(FileType.FILES) { closure.call(it) }
 	}
+	
+	def withEachAllFileWithIndex(Closure closure) {
+		int index = 0
+		new File(filename).eachFileRecurse(FileType.FILES) { closure.call(it, index++) }
+	}
 
 	def withEachTestFile(Closure closure) {
 		new File(filename).eachFileRecurse(FileType.FILES) {
@@ -86,8 +91,12 @@ class FileUtil {
 		}
 	}
 
-	def parent(String path){
+	def static parentFile(String path){
 		new File(path).parentFile
+	}
+	
+	def static parent(String path){
+		new File(path).parentFile.absolutePath
 	}
 	
 	def rename(String from, String to, def files){

@@ -1,0 +1,35 @@
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<button class="btn btn-primary">
+					<span>Create</span>
+				</button>
+				<button class="btn btn-primary">
+					<span>Edit</span>
+				</button>
+			</div>
+			<div class="col-md-8 col-md-offset-2">
+				<table>
+					<thead>
+						<tr>
+						${
+							instance.columns.each { 
+								test.doMethod(it)
+							}
+						}
+								templateManger.columnHead(it).toString()
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							instance.columns.each { column ->
+								templateManger.templateDetail(column)
+							}
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
