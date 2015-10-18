@@ -16,34 +16,7 @@ class TemplateManager {
 //	def engine = new MarkupTemplateEngine()
 	
 	
-	def defaultText(Object[] instances, String source, String logLevel = "", String instanceKey = "instances") {
-		String output = "NULL, error found"
-		String message = ""	
-			
-		try {
-			message += "\n${logLevel}org.test.util.defaultText$L {" +
-					"\n$logLevel\tinstances: $instances" +
-					"\n$logLevel\tgetting data" +
-					"\n$logLevel\tcreate engine" +
-					"\n$logLevel\tcreate template" +
-					"\n${logLevel}}"
-			def args = [ : ]
-			args.put(instanceKey, instances)
-			args.put("templateManger", this)
-			args.put("test", new Test())
-			
-			def template = engine.createTemplate(source).make(args)
-			output = template.toString()
-		} catch (Exception e) {
-			e.printStackTrace()
-		}
-		
-		
-		println message
-		output
-	}
-	
-	def defaultText(Object instance, String source, String logLevel = "", String instanceKey = "instance") {
+	def defaultText(Object instance, String source, String instanceKey = "instance", String logLevel = "") {
 		String output = "NULL, error found"
 		String message = ""
 		
@@ -61,35 +34,21 @@ class TemplateManager {
 			
 			def template = engine.createTemplate(source).make(args)
 			output = template.toString()
+			
+			println "before: $output\n\n-----------\n"
+			
+			if(output.contains("#SECOND_LEVEL#")){
+				engine = new SimpleTemplateEngine()
+				String newTemplate = output.replace("#SECOND_LEVEL#", '\\$')
+				output = engine.createTemplate(newTemplate).make(args).toString()
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace()
 		}
 		
 		println message
 		output
-	}
-	
-	def defaultText2(def instance, String source, String logLevel = "", def keys) {
-		String message = "NULL, error found"
-		
-		message += "\n${logLevel}org.test.util.defaultText2 {" +
-				"\n$logLevel\tinstance: $instance" +
-				"\n$logLevel\tgetting data" +
-				"\n$logLevel\tcreate engine" +
-				"\n$logLevel\tcreate template" +
-				"\n${logLevel}}"
-		
-		def args = [ : ]
-		keys.eachWithIndex { it, index ->
-			args.put(it, instance[index])
-		}
-		args.put("templateManger", this)
-		args.put("test", new Test())
-		
-		def template = engine.createTemplate(source).make(args)
-		
-		println message
-		template
 	}
 	
 }

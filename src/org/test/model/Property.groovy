@@ -2,6 +2,8 @@ package org.test.model;
 
 import java.io.Serializable;
 
+import org.test.util.TemplateManager;
+
 public class Property implements Serializable {
 
 	private static final long serialVersionUID = 7453223074019943051L;
@@ -143,4 +145,9 @@ public class Property implements Serializable {
 		return this;
 	}
 
+	public String build(TemplateManager manager, String methodName, Object args) {
+		String result = manager."$methodName"(args) ?: "ERROR"
+		return result;
+	}
+	
 }

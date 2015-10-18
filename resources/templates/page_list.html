@@ -13,11 +13,15 @@
 				<table>
 					<thead>
 						<tr>
-						${
-							instance.columns.each { 
+						
+						#SECOND_LEVEL#{new Date()}
+						${new Date()}
+						
+						
+						{ instance.columns.each { templateManger.columnHead(it) } }
+						
+								it.build(templateManger, 'columnHead', it) 
 								test.doMethod(it)
-							}
-						}
 								templateManger.columnHead(it).toString()
 						</tr>
 					</thead>
