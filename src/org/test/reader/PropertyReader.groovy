@@ -10,15 +10,24 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+
 import org.test.model.Property
+import org.test.util.TemplateManager;
 
 class PropertyReader {
 	
 	private Class<?> ownerClass
+	private TemplateManager templateManager;
 	
 	public PropertyReader(Class<?> ownerClass) {
 		super();
 		this.ownerClass = ownerClass;
+	}
+
+	public PropertyReader(Class<?> ownerClass, TemplateManager templateManager) {
+		super();
+		this.ownerClass = ownerClass;
+		this.templateManager = templateManager;
 	}
 
 	public Property convert(Field field) {
@@ -37,6 +46,8 @@ class PropertyReader {
 		property.localization = field.getName().toLowerCase()
 		property.dataType = field.getType()
 		property.caption = field.getName()
+		
+		property.templates = templateManager.eachPropertyTemplate(property)
 		
 		property;
 	}

@@ -22,6 +22,7 @@ public class Property implements Serializable {
 	private String simpleType;
 	private String sortType;
 	private String localization;
+	private Map<String, String> templates = new HashMap<String, String>();
 
 	public Property() {
 		super();
@@ -145,9 +146,12 @@ public class Property implements Serializable {
 		return this;
 	}
 
-	public String build(TemplateManager manager, String methodName, Object args) {
-		String result = manager."$methodName"(args) ?: "ERROR"
-		return result;
+	public Map<String, String> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(Map<String, String> templates) {
+		this.templates = templates;
 	}
 	
 }

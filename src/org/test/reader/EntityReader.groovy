@@ -6,15 +6,24 @@ import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Table
+
 import org.test.model.Entity
 import org.test.model.Property
+import org.test.util.TemplateManager;
 
 
 class EntityReader {
 
 	private String log = ""
+	private TemplateManager templateManager;
 	
+	public EntityReader(TemplateManager templateManager) {
+		super();
+		this.templateManager = templateManager;
+	}
+
 	public Entity work(File file, Integer index){
 		readEntity(readClass(file.text), index)
 	}
@@ -30,7 +39,7 @@ class EntityReader {
 		entity.setListCount(numberOfLists(clazz))
 		entity.setComplexCount(numberOfComplex(clazz))
 		
-		PropertyReader convertor = new PropertyReader(clazz)
+		PropertyReader convertor = new PropertyReader(clazz, templateManager)
 		List<Property> list = Collections.synchronizedList(new ArrayList<Property>());
 		
 		try {
@@ -45,6 +54,7 @@ class EntityReader {
 						try {
 							if (!suspiciousField(it)) {
 								list << convertor.convert(it)
+//								templateManager.eachPropertyTemplate(it)
 							}
 						} catch (Exception e) {
 							StringWriter sw = new StringWriter();

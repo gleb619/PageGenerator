@@ -2,7 +2,9 @@ package org.test.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Entity implements Serializable {
 
@@ -113,6 +115,21 @@ public class Entity implements Serializable {
 
 	public void setLog(String log) {
 		this.log = log;
+	}
+
+	/* ================== 19 окт. 2015 г. ================== */
+	
+	public String eachTemplateByName(String templateName) {
+		String output = "";
+		try {
+			output = columns.stream()
+				.map(it -> it.getTemplates().getOrDefault(templateName, "NOT FOUND"))
+				.collect(Collectors.joining(""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return output;
 	}
 	
 }

@@ -13,23 +13,12 @@
 				<table>
 					<thead>
 						<tr>
-						
-						#SECOND_LEVEL#{new Date()}
-						${new Date()}
-						
-						
-						{ instance.columns.each { templateManger.columnHead(it) } }
-						
-								it.build(templateManger, 'columnHead', it) 
-								test.doMethod(it)
-								templateManger.columnHead(it).toString()
+							${ instance.eachTemplateByName('propertyHead') }
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							instance.columns.each { column ->
-								templateManger.templateDetail(column)
-							}
+							${ instance.eachTemplateByName('propertyDetail') }
 						</tr>
 					</tbody>
 				</table>

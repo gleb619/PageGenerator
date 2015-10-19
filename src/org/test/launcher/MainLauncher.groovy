@@ -12,8 +12,7 @@ import org.test.util.TemplateUtil
 
 class MainLauncher {
 
-	def static settings
-	static TemplateManager templateManager 
+	
 	
 	static main(args) {
 		work()
@@ -21,11 +20,15 @@ class MainLauncher {
 
 	private static work() {
 		def entities = []
-		TemplateUtil templateUtil = new TemplateUtil()
+		def settings
+		TemplateManager templateManager
+		TemplateUtil templateUtil
+		
+		settings = new JsonSlurper().parseText(this.getClass().getResource('/config.json').text)
+		templateUtil = new TemplateUtil(settings)
 		templateUtil.init()
 		templateManager = templateUtil.createManager()
 
-		settings = new JsonSlurper().parseText(this.getClass().getResource('/config.json').text)
 		String path = FileUtil.parent(FileUtil.parent(MainLauncher.class.getProtectionDomain().getCodeSource().getLocation().getPath()))
 		path += "/src/enities/"
 		FileUtil fileUtil = new FileUtil(path)
@@ -34,13 +37,13 @@ class MainLauncher {
 		Thread thread = new Thread(new Runnable(){
 			public void run(){
 				fileUtil.withEachAllFileWithIndex { file, index ->
-					EntityReader entityReader = new EntityReader()
+					EntityReader entityReader = new EntityReader(templateManager)
 					def entity = entityReader.work(file, index)
 					entities << entity
 				}
 
 				try {
-					println "\n\nresult: " + templateManager.pageList(entities[0])
+					println "\n\nresult: " + templateManager.entityList(entities[0])
 				} catch (Exception e) {
 					e.printStackTrace()
 				}

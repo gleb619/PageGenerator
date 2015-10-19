@@ -1,5 +1,11 @@
 {
 	"sourcePath": "N:/TEST/SOURCE",
 	"packageTo": "org.test",
-	"packageFrom": "org.test"
+	"packageFrom": "org.test",
+	"dataTypes": [{
+		"name": "Template for java.lang.Integer",
+		"classContains": "Integer",
+		"originTemplate": "property_detail.html",
+		"template": "property_detail_integer.html"
+	}]
 }
